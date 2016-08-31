@@ -1,10 +1,10 @@
 FROM ubuntu:14.04
 MAINTAINER Brett Holton	<brett@vreal.io> 
 
-ENV HOME /opt/mongooseim
-ENV MONGOOSEIM_VERSION 1.6.2 
-ENV MONGOOSEIM_REL_DIR /opt/mongooseim/rel/mongooseim
-ENV PATH /opt/mongooseim/rel/mongooseim/bin/:$PATH
+ENV HOME /opt/mongooseim \
+    MONGOOSEIM_REL_DIR /opt/mongooseim/rel/mongooseim \
+    PATH /opt/mongooseim/rel/mongooseim/bin/:$PATH
+
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Avoid ERROR: invoke-rc.d: policy-rc.d denied execution of start.
@@ -13,6 +13,7 @@ RUN echo "#!/bin/sh\nexit 0" > /usr/sbin/policy-rc.d
 # install required packages
 RUN apt-get update && apt-get install -y   gcc \
                                            g++ \
+                                           git \
                                            libc6-dev \
                                            libncurses5-dev \
                                            libssl-dev \
@@ -32,7 +33,7 @@ RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb \
 
 COPY . /opt/mongooseim/
 
-ADD ./start.sh start.sh
+ADD ./docker_start.sh docker_start.sh
 
 WORKDIR /opt/mongooseim/ 
 
@@ -48,5 +49,5 @@ EXPOSE 5222 5280 5269 4369 9100
 # Define mount points.
 VOLUME ["/data/mnesia", "/data/log"]
 
-ENTRYPOINT ["./start.sh"]
+ENTRYPOINT ["./docker_start.sh"]
 

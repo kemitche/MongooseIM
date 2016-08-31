@@ -16,13 +16,9 @@ if [ -n "$CLUSTER_WITH"  ]; then
        echo "the node is probably part of a cluster"
    else
        $MIMDIR/bin/mongooseimctl add_to_cluster mongooseim@$CLUSTER_WITH
-       mv -f "$MIMDIR/Mnesia.mongooseim@$HOSTNAME" "/data/mnesia/Mnesia.mongooseim@$HOSTNAME"
+       mv -f "$MONGOOSEIM_REL_DIR/Mnesia.mongooseim@$HOSTNAME" "/data/mnesia/Mnesia.mongooseim@$HOSTNAME"
    fi
 fi
 
-if [ "$#" -ne 1 ]; then
-   $MIMDIR/bin/mongooseim live --noshell -noinput +Bd  -mnesia dir \"/data/mnesia/Mnesia.mongooseim@$HOSTNAME\"
-else
-   $MIMDIR/bin/mongooseimctl $1
-fi
+$MONGOOSEIM_REL_DIR/bin/mongooseim live --noshell -noinput +Bd  -mnesia dir \"/data/mnesia/Mnesia.mongooseim@$HOSTNAME\"
 

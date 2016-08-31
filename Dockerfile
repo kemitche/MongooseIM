@@ -1,9 +1,9 @@
 FROM ubuntu:14.04
 MAINTAINER Brett Holton	<brett@vreal.io> 
 
-ENV HOME /opt/mongooseim \
-    MONGOOSEIM_REL_DIR /opt/mongooseim/rel/mongooseim \
-    PATH /opt/mongooseim/rel/mongooseim/bin/:$PATH
+ENV HOME=/opt/mongooseim \
+    MONGOOSEIM_REL_DIR=/opt/mongooseim/rel/mongooseim \
+    PATH=/opt/mongooseim/rel/mongooseim/bin/:$PATH
 
 ARG DEBIAN_FRONTEND=noninteractive
 
@@ -32,8 +32,6 @@ RUN wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb \
 
 
 COPY . /opt/mongooseim/
-
-ADD ./docker_start.sh docker_start.sh
 
 WORKDIR /opt/mongooseim/ 
 
